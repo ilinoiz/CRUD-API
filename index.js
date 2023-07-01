@@ -1,7 +1,6 @@
 import http from "http";
 import RequestRouter from "./RequestRouter.js";
-
-const PORT = 3000;
+import "dotenv/config";
 
 const requestRouter = new RequestRouter();
 const server = http.createServer();
@@ -18,6 +17,6 @@ server.on("request", async (request, response) => {
   }
 });
 
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+server.listen(process.env.PORT, () => {
+  console.log(`Server running on port ${process.env.PORT}`);
 });
