@@ -1,9 +1,13 @@
-import usersRepository from "../UsersRepository.js";
-import { validateUserDto } from "../validators/validateUserDto.js";
-import { getRequestJsonBody } from "../utils/getRequestBody.js";
+import usersRepository from "../UsersRepository";
+import { validateUserDto } from "../validators/validateUserDto";
+import { getRequestJsonBody } from "../utils/getRequestBody";
+import { IncomingMessage, ServerResponse } from "http";
 
 class CreateUsersHandler {
-  constructor(request, response) {
+  request: IncomingMessage;
+  response: ServerResponse;
+
+  constructor(request: IncomingMessage, response: ServerResponse) {
     this.request = request;
     this.response = response;
   }

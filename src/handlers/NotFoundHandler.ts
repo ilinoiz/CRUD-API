@@ -1,5 +1,9 @@
+import { IncomingMessage, ServerResponse } from "http";
+
 class NotFoundHandler {
-  constructor(request, response) {
+  request: IncomingMessage;
+  response: ServerResponse;
+  constructor(request: IncomingMessage, response: ServerResponse) {
     this.request = request;
     this.response = response;
   }

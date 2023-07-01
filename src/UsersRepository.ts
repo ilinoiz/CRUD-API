@@ -1,5 +1,9 @@
 import { v4 as uuid } from "uuid";
+import { UserDTO } from "./models/UserDTO";
+
 class UsersRepository {
+  usersDb: UserDTO[];
+
   constructor() {
     this.usersDb = [
       {
@@ -13,16 +17,16 @@ class UsersRepository {
 
   getAll = () => this.usersDb;
 
-  getById = (id) => this.usersDb.find((user) => user.id === id);
+  getById = (id: string) => this.usersDb.find((user) => user.id === id);
 
-  create = (userDto) => {
+  create = (userDto: UserDTO) => {
     const id = uuid();
     const createdUser = { ...userDto, id };
     this.usersDb.push(createdUser);
     return createdUser;
   };
 
-  update = (id, userDto) => {
+  update = (id: string, userDto: UserDTO) => {
     const index = this.usersDb.findIndex((user) => user.id === id);
     if (index < 0) {
       return false;
@@ -31,7 +35,7 @@ class UsersRepository {
     return true;
   };
 
-  delete = (id) => {
+  delete = (id: string) => {
     const index = this.usersDb.findIndex((user) => user.id === id);
     if (index > -1) {
       this.usersDb = this.usersDb.filter((user) => user.id !== id);

@@ -1,10 +1,15 @@
-import usersRepository from "../UsersRepository.js";
-import { getRequestJsonBody } from "../utils/getRequestBody.js";
+import usersRepository from "../UsersRepository";
+import { getRequestJsonBody } from "../utils/getRequestBody";
 import { validate } from "uuid";
-import { validateUserDto } from "../validators/validateUserDto.js";
+import { validateUserDto } from "../validators/validateUserDto";
+import { IncomingMessage, ServerResponse } from "http";
+import { RequestParams } from "../models/RequestParams";
 
 class UpdateUsersHandler {
-  constructor(request, response, params) {
+  request: IncomingMessage;
+  response: ServerResponse;
+  params: RequestParams;
+  constructor(request: IncomingMessage, response: ServerResponse, params: RequestParams) {
     this.request = request;
     this.response = response;
     this.params = params;

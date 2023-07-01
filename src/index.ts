@@ -1,5 +1,5 @@
-import http from "http";
-import RequestRouter from "./RequestRouter.js";
+import * as http from "http";
+import RequestRouter from "./RequestRouter";
 import "dotenv/config";
 
 const requestRouter = new RequestRouter();

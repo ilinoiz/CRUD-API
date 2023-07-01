@@ -1,14 +1,15 @@
-import CreateUsersHandler from "./handlers/CreateUserHandler.js";
-import DeleteUsersHandler from "./handlers/DeleteUsersHandler.js";
-import GetAllUsersHandler from "./handlers/GetAllUsersHandler.js";
-import GetUserByIdHandler from "./handlers/GetUserByIdHandler.js";
-import NotFoundHandler from "./handlers/NotFoundHandler.js";
-import UpdateUsersHandler from "./handlers/UpdateUsersHandler.js";
+import { IncomingMessage, ServerResponse } from "http";
+import CreateUsersHandler from "./handlers/CreateUserHandler";
+import DeleteUsersHandler from "./handlers/DeleteUsersHandler";
+import GetAllUsersHandler from "./handlers/GetAllUsersHandler";
+import GetUserByIdHandler from "./handlers/GetUserByIdHandler";
+import NotFoundHandler from "./handlers/NotFoundHandler";
+import UpdateUsersHandler from "./handlers/UpdateUsersHandler";
 
 class RequestRouter {
   usersEndpoint = "/api/users";
 
-  getHandler = (request, response) => {
+  getHandler = (request: IncomingMessage, response: ServerResponse) => {
     if (request.url === this.usersEndpoint) {
       if (request.method === "GET") {
         return new GetAllUsersHandler(request, response);

@@ -1,8 +1,13 @@
-import usersRepository from "../UsersRepository.js";
+import usersRepository from "../UsersRepository";
 import { validate } from "uuid";
+import { RequestParams } from "../models/RequestParams";
+import { IncomingMessage, ServerResponse } from "http";
 
 class DeleteUsersHandler {
-  constructor(request, response, params) {
+  request: IncomingMessage;
+  response: ServerResponse;
+  params: RequestParams;
+  constructor(request: IncomingMessage, response: ServerResponse, params: RequestParams) {
     this.request = request;
     this.response = response;
     this.params = params;

@@ -1,7 +1,11 @@
-import usersRepository from "../UsersRepository.js";
+import { IncomingMessage, ServerResponse } from "http";
+import usersRepository from "../UsersRepository";
 
 class GetAllUsersHandler {
-  constructor(request, response) {
+  request: IncomingMessage;
+  response: ServerResponse;
+
+  constructor(request: IncomingMessage, response: ServerResponse) {
     this.request = request;
     this.response = response;
   }
