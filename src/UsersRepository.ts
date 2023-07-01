@@ -17,7 +17,9 @@ class UsersRepository {
 
   getAll = () => this.usersDb;
 
-  getById = (id: string) => this.usersDb.find((user) => user.id === id);
+  getById = (id: string): UserDTO | null => {
+    return this.usersDb.find((user) => user.id === id) || null;
+  };
 
   create = (userDto: UserDTO) => {
     const id = uuid();

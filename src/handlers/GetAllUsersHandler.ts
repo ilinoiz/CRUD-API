@@ -1,13 +1,10 @@
 import { IncomingMessage, ServerResponse } from "http";
 import usersRepository from "../UsersRepository";
+import { BaseHandler } from "./BaseHandler";
 
-class GetAllUsersHandler {
-  request: IncomingMessage;
-  response: ServerResponse;
-
+class GetAllUsersHandler extends BaseHandler {
   constructor(request: IncomingMessage, response: ServerResponse) {
-    this.request = request;
-    this.response = response;
+    super(request, response);
   }
 
   handle = () => {

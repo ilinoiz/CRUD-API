@@ -4,14 +4,16 @@ import { validate } from "uuid";
 import { validateUserDto } from "../validators/validateUserDto";
 import { IncomingMessage, ServerResponse } from "http";
 import { RequestParams } from "../models/RequestParams";
+import { BaseHandler } from "./BaseHandler";
 
-class UpdateUsersHandler {
-  request: IncomingMessage;
-  response: ServerResponse;
+class UpdateUsersHandler extends BaseHandler {
   params: RequestParams;
-  constructor(request: IncomingMessage, response: ServerResponse, params: RequestParams) {
-    this.request = request;
-    this.response = response;
+  constructor(
+    request: IncomingMessage,
+    response: ServerResponse,
+    params: RequestParams
+  ) {
+    super(request, response);
     this.params = params;
   }
 

@@ -1,11 +1,9 @@
 import { IncomingMessage, ServerResponse } from "http";
+import { BaseHandler } from "./BaseHandler";
 
-class NotFoundHandler {
-  request: IncomingMessage;
-  response: ServerResponse;
+class NotFoundHandler extends BaseHandler {
   constructor(request: IncomingMessage, response: ServerResponse) {
-    this.request = request;
-    this.response = response;
+    super(request, response);
   }
 
   handle = () => {

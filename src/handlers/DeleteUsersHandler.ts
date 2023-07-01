@@ -2,14 +2,16 @@ import usersRepository from "../UsersRepository";
 import { validate } from "uuid";
 import { RequestParams } from "../models/RequestParams";
 import { IncomingMessage, ServerResponse } from "http";
+import { BaseHandler } from "./BaseHandler";
 
-class DeleteUsersHandler {
-  request: IncomingMessage;
-  response: ServerResponse;
+class DeleteUsersHandler extends BaseHandler {
   params: RequestParams;
-  constructor(request: IncomingMessage, response: ServerResponse, params: RequestParams) {
-    this.request = request;
-    this.response = response;
+  constructor(
+    request: IncomingMessage,
+    response: ServerResponse,
+    params: RequestParams
+  ) {
+    super(request, response);
     this.params = params;
   }
 
