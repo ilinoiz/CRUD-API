@@ -24,7 +24,7 @@ class UsersRepository {
 
   update = (id, userDto) => {
     const index = this.usersDb.findIndex((user) => user.id === id);
-    if (!index) {
+    if (index < 0) {
       return false;
     }
     this.usersDb[index] = userDto;
@@ -34,10 +34,7 @@ class UsersRepository {
   delete = (id) => {
     const index = this.usersDb.findIndex((user) => user.id === id);
     if (index > -1) {
-      this.usersDb = [
-        ...this.usersDb.slice(0, index),
-        ...this.usersDb.slice(index),
-      ];
+      this.usersDb = this.usersDb.filter((user) => user.id !== id);
       return true;
     } else {
       return false;

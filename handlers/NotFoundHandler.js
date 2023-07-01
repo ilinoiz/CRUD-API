@@ -6,7 +6,7 @@ class NotFoundHandler {
 
   handle = () => {
     this.response.statusCode = 404;
-    this.response.end("Not found");
+    this.response.end("Route Not found");
   };
 }
 export default NotFoundHandler;

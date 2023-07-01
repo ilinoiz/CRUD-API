@@ -1,16 +1,14 @@
 import usersRepository from "../UsersRepository.js";
 
 class GetUserByIdHandler {
-  constructor(request, response) {
+  constructor(request, response, params) {
     this.request = request;
     this.response = response;
+    this.params = params;
   }
 
   handle = () => {
-    const regex = /api\/users\/(?<id>[\w-]+)/;
-    const match = regex.exec(this.request.url);
-
-    const user = usersRepository.getById(match.groups.id);
+    const user = usersRepository.getById(this.params.id);
     if (user) {
       this.response.statusCode = 200;
       this.response.end(JSON.stringify(user));

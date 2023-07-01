@@ -4,11 +4,12 @@ import RequestRouter from "./RequestRouter.js";
 const PORT = 3000;
 
 const requestRouter = new RequestRouter();
+const server = http.createServer();
 
-const server = http.createServer((request, response) => {
+server.on("request", async (request, response) => {
   response.setHeader("Content-Type", "application/json");
   const handler = requestRouter.getHandler(request, response);
-  handler.handle();
+  await handler.handle();
 });
 
 server.listen(PORT, () => {
