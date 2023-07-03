@@ -7,7 +7,7 @@ class NotFoundHandler extends BaseHandler {
     super(request, response);
   }
 
-  handle = () => {
+  handle = async () => {
     throw new NotFoundError("Route not found");
   };
 }

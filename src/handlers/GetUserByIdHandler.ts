@@ -18,7 +18,7 @@ class GetUserByIdHandler extends BaseHandler {
     this.params = params;
   }
 
-  handle = () => {
+  handle = async () => {
     const isUUID = validate(this.params.id);
     if (!isUUID) {
       throw new ValidationError("Incorrect format for user id");

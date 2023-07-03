@@ -8,7 +8,7 @@ class GetAllUsersHandler extends BaseHandler {
     super(request, response);
   }
 
-  handle = () => {
+  handle = async () => {
     const allUsers = usersRepository.getAll();
     this.response.statusCode = RESPONSE_CODE.OK;
     this.response.end(JSON.stringify(allUsers));
