@@ -5,8 +5,7 @@ class UsersRepository {
   usersDb: UserDTO[];
 
   constructor() {
-    this.usersDb = [
-    ];
+    this.usersDb = [];
   }
 
   getAll = () => this.usersDb;
@@ -23,6 +22,7 @@ class UsersRepository {
   };
 
   update = (id: string, userDto: UserDTO) => {
+    userDto.id = id;
     const index = this.usersDb.findIndex((user) => user.id === id);
     if (index < 0) {
       return false;

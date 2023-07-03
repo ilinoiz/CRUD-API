@@ -9,31 +9,32 @@ import { REQUEST_METHOD } from "./utils/constants";
 
 class RequestRouter {
   usersEndpoint = "/api/users";
+  usersIdRouteRegexp = /api\/users(\/)?(?<id>[\w-]+)?\/?$/;
+  usersRouteRegexp = /api\/users(\/)?$/;
 
   getHandler = (request: IncomingMessage, response: ServerResponse) => {
-    if (request.url === this.usersEndpoint) {
-      if (request.method === REQUEST_METHOD.GET) {
-        return new GetAllUsersHandler(request, response);
+    const userRouteMatch = this.usersRouteRegexp.exec(request.url);
+    const idRouteMatch = this.usersIdRouteRegexp.exec(request.url);
+    const params = { id: idRouteMatch?.groups?.id };
+
+    if (userRouteMatch?.length && !params.id) {
+      switch (request.method) {
+        case REQUEST_METHOD.GET:
+          return new GetAllUsersHandler(request, response);
+        case REQUEST_METHOD.POST:
+          return new CreateUsersHandler(request, response);
       }
-      if (request.method === REQUEST_METHOD.POST) {
-        return new CreateUsersHandler(request, response);
+    }
+
+    if (idRouteMatch?.length && params.id) {
+      switch (request.method) {
+        case REQUEST_METHOD.GET:
+          return new GetUserByIdHandler(request, response, params);
+        case REQUEST_METHOD.PUT:
+          return new UpdateUsersHandler(request, response, params);
+        case REQUEST_METHOD.DELETE:
+          return new DeleteUsersHandler(request, response, params);
       }
-    }
-
-    const regex = /api\/users\/(?<id>[\w-]+)/;
-    const match = regex.exec(request.url);
-    const params = { id: match?.groups?.id };
-
-    if (request.method === REQUEST_METHOD.GET && params.id) {
-      return new GetUserByIdHandler(request, response, params);
-    }
-
-    if (request.method === REQUEST_METHOD.PUT && params.id) {
-      return new UpdateUsersHandler(request, response, params);
-    }
-
-    if (request.method === REQUEST_METHOD.DELETE && params.id) {
-      return new DeleteUsersHandler(request, response, params);
     }
 
     return new NotFoundHandler(request, response);

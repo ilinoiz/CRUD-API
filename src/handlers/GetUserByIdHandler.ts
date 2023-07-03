@@ -24,12 +24,11 @@ class GetUserByIdHandler extends BaseHandler {
       throw new ValidationError("Incorrect format for user id");
     }
     const user = usersRepository.getById(this.params.id);
-    if (user) {
-      this.response.statusCode = RESPONSE_CODE.OK;
-      this.response.end(JSON.stringify(user));
-      return;
+    if (!user) {
+      throw new NotFoundError("User not found");
     }
-    throw new NotFoundError("User not found");
+    this.response.statusCode = RESPONSE_CODE.OK;
+    this.response.end(JSON.stringify(user));
   };
 }
 export default GetUserByIdHandler;
