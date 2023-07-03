@@ -6,12 +6,6 @@ class UsersRepository {
 
   constructor() {
     this.usersDb = [
-      {
-        username: "Alen",
-        age: 27,
-        hobbies: ["painting"],
-        id: "6f033bb9-7f60-4267-9ff6-c5c0c199dc48",
-      },
     ];
   }
 

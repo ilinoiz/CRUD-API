@@ -1,5 +1,6 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { BaseHandler } from "./BaseHandler";
+import { NotFoundError } from "../errors/NotFoundError";
 
 class NotFoundHandler extends BaseHandler {
   constructor(request: IncomingMessage, response: ServerResponse) {
@@ -7,8 +8,7 @@ class NotFoundHandler extends BaseHandler {
   }
 
   handle = () => {
-    this.response.statusCode = 404;
-    this.response.end("Route Not found");
+    throw new NotFoundError("Route not found");
   };
 }
 export default NotFoundHandler;

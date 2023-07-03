@@ -3,6 +3,9 @@ import { validate } from "uuid";
 import { RequestParams } from "../models/RequestParams";
 import { IncomingMessage, ServerResponse } from "http";
 import { BaseHandler } from "./BaseHandler";
+import { ValidationError } from "../errors/ValidationError";
+import { NotFoundError } from "../errors/NotFoundError";
+import { RESPONSE_CODE } from "../utils/constants";
 
 class DeleteUsersHandler extends BaseHandler {
   params: RequestParams;
@@ -18,17 +21,14 @@ class DeleteUsersHandler extends BaseHandler {
   handle = async () => {
     const isUUID = validate(this.params.id);
     if (!isUUID) {
-      this.response.statusCode = 400;
-      this.response.end("Bad Request: Incorrect format for user id");
-      return;
+      throw new ValidationError("Incorrect format for user id");
     }
 
     const deleteResult = usersRepository.delete(this.params.id);
     if (!deleteResult) {
-      this.response.statusCode = 404;
-      this.response.end("User not found");
+      throw new NotFoundError("User not found");
     }
-    this.response.statusCode = 204;
+    this.response.statusCode = RESPONSE_CODE.NO_CONTENT;
     this.response.end();
   };
 }

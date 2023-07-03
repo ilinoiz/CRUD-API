@@ -3,6 +3,8 @@ import { validateUserDto } from "../validators/validateUserDto";
 import { getRequestJsonBody } from "../utils/getRequestBody";
 import { IncomingMessage, ServerResponse } from "http";
 import { BaseHandler } from "./BaseHandler";
+import { ValidationError } from "../errors/ValidationError";
+import { RESPONSE_CODE } from "../utils/constants";
 
 class CreateUsersHandler extends BaseHandler {
   constructor(request: IncomingMessage, response: ServerResponse) {
@@ -13,12 +15,10 @@ class CreateUsersHandler extends BaseHandler {
     const userDto = await getRequestJsonBody(this.request);
     const validationResult = validateUserDto(userDto);
     if (validationResult.length) {
-      this.response.statusCode = 400;
-      this.response.end(JSON.stringify(validationResult));
-      return;
+      throw new ValidationError("User not valid", validationResult);
     }
     const createdUser = usersRepository.create(userDto);
-    this.response.statusCode = 201;
+    this.response.statusCode = RESPONSE_CODE.CREATED;
     this.response.end(JSON.stringify(createdUser));
   };
 }

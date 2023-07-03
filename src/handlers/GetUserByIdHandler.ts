@@ -3,6 +3,9 @@ import usersRepository from "../UsersRepository";
 import { validate } from "uuid";
 import { RequestParams } from "../models/RequestParams";
 import { BaseHandler } from "./BaseHandler";
+import { ValidationError } from "../errors/ValidationError";
+import { NotFoundError } from "../errors/NotFoundError";
+import { RESPONSE_CODE } from "../utils/constants";
 
 class GetUserByIdHandler extends BaseHandler {
   params: RequestParams;
@@ -18,18 +21,15 @@ class GetUserByIdHandler extends BaseHandler {
   handle = () => {
     const isUUID = validate(this.params.id);
     if (!isUUID) {
-      this.response.statusCode = 400;
-      this.response.end("Bad Request: Incorrect format for user id");
-      return;
+      throw new ValidationError("Incorrect format for user id");
     }
     const user = usersRepository.getById(this.params.id);
     if (user) {
-      this.response.statusCode = 200;
+      this.response.statusCode = RESPONSE_CODE.OK;
       this.response.end(JSON.stringify(user));
       return;
     }
-    this.response.statusCode = 404;
-    this.response.end("User not found");
+    throw new NotFoundError("User not found");
   };
 }
 export default GetUserByIdHandler;

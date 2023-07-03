@@ -1,6 +1,7 @@
 import { IncomingMessage, ServerResponse } from "http";
 import usersRepository from "../UsersRepository";
 import { BaseHandler } from "./BaseHandler";
+import { RESPONSE_CODE } from "../utils/constants";
 
 class GetAllUsersHandler extends BaseHandler {
   constructor(request: IncomingMessage, response: ServerResponse) {
@@ -9,7 +10,7 @@ class GetAllUsersHandler extends BaseHandler {
 
   handle = () => {
     const allUsers = usersRepository.getAll();
-    this.response.statusCode = 200;
+    this.response.statusCode = RESPONSE_CODE.OK;
     this.response.end(JSON.stringify(allUsers));
   };
 }
